@@ -1,0 +1,28 @@
+<main>
+  {{#if error}}
+  <h2> {{title}} </h2>
+  <p class="error">{{error}}</p>
+  {{/if}}
+  <form id="registration-form" action="/users/register" method="POST">
+    <label for="firstnameInput">First Name:</label>
+    <input for="firstnameInput" name="firstnameInput" type="text" id="firstnameInput" required/>
+    <br>
+    <label for="lastnameInput">Last Name:</label>
+    <input for="lastnameInput" name="lastnameInput" type="text" id="lastnameInput" required/>
+    <br>
+    <label for="emailInput">Email:</label>
+    <input for="emailInput" name="emailInput" type="email" id="emailInput" required/>
+    <br>
+    <label for="ageInput">Age:</label>
+    <input for="ageInput" name="ageInput" type="text" id="ageInput" required/>
+    <br>
+    <label for="usernameInput">Username</label>
+    <input id="usernameInput" name="usernameInput" type="text" required />
+    <br>
+    <label for="passwordInput">Password</label>
+    <input id="passwordInput" name="passwordInput" type="password" required />
+    <br>
+    <button type="submit">Register</button>
+  </form>
+  <a href="/users/login">Already have an account? Click here to log-in</a>
+</main>

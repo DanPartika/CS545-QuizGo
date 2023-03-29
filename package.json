@@ -1,0 +1,19 @@
+{
+  "name": "quizgo",
+  "version": "1.0.0",
+  "description": "A website that allows users to upload sets of 2 word and definition pairs",
+  "main": "app.js",
+  "scripts": {
+    "start": "node app.js"
+  },
+  "author": "Daniel Partika, Elton Vaz, Daniel Martinez, Tahyr Bayryyev, Cody Fernandez, and Sri Hari Shankar",
+  "license": "ISC",
+  "dependencies": {
+    "bcrypt": "^5.1.0",
+    "express": "^4.18.2",
+    "express-handlebars": "^7.0.4",
+    "express-session": "^1.17.3",
+    "mongodb": "^5.1.0",
+    "xss": "^1.0.14"
+  }
+}
