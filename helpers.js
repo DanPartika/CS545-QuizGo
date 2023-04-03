@@ -2,8 +2,8 @@
 const { ObjectId } = require("mongodb");
 
 function checkStr(str) {
-  if (!str) throw 'Please input a number.'
-  if (typeof str !== 'string') throw 'Input a number.'
+  if (!str) throw 'Please input a string.'
+  if (typeof str !== 'string') throw 'Input a string.'
   const trimmed = str.trim();
   if (trimmed.length < 1) throw 'Input cannot be just spaces.'
   return trimmed;
@@ -13,14 +13,7 @@ function checkStr(str) {
 function checkArr(arr) {
   let arrInvalidFlag = false;
   if (!arr || !Array.isArray(arr)) throw "You must provide an array";
-  if (arr.length === 0) return ["No additional information supplied"];
-  // for (i in arr) {
-  //   if (typeof arr[i] !== "string" || arr[i].trim().length === 0) {
-  //     arrInvalidFlag = true;
-  //     break;
-  //   }
-  //   arr[i] = checkStr(arr[i]);
-  // }
+  if (arr.length === 0) throw "you must provide a string";
   arr.forEach(str => {
     checkStr(str);
   });
@@ -81,15 +74,6 @@ function checkAddress(streetAddress) {
   return checkStr(streetAddress);
 }
 
-//
-function checkRent(rentPerMonth) {
-  if (!rentPerMonth) throw "You must provide a valid number.";
-  if (isNaN(rentPerMonth)) throw `${rentPerMonth} must be a number`;
-  if (rentPerMonth.toString().includes('.')) throw `${rentPerMonth} should be a whole number`;
-  let rntPM = parseInt(rentPerMonth)
-  if (rntPM <= -1) throw "Number must be positive";
-  return rntPM;
-}
 
 //
 function checkRentDuration(rentDuration) {
@@ -97,24 +81,6 @@ function checkRentDuration(rentDuration) {
   if ( !(/\d/.test(rentDuration)) ) throw `${rentDuration} must contain a specified number of length`
   let rntDur = rentDuration.trim();
   return checkNum(rntDur);
-}
-
-//
-function checkResidents(maxResidents) {
-  
-  return checkNum(maxResidents);
-}
-
-//
-function checkBedrooms(numBedrooms) {
-  
-  return checkNum(numBedrooms);
-}
-
-//
-function checkBathrooms(numBathrooms) {
-  
-  return checkNum(numBathrooms);
 }
 
 //
@@ -126,54 +92,13 @@ function checkLaundry(laundry) {
   return laundry;
 }
 
-//
-function checkFloors(floorNum) {
-  
-  return checkNum(floorNum); //??possible error, this will throw on negative values?
-  /* possible fix
-  try {
-    return checkNum(floorNum)
-  } catch (e) {
-    if (checkNum < -5) throw "apt cannot be 5 floors underground"
-    return floorNum
-  }
-  */
-}
-
-//
-function checkRoomNum(roomNum) {
-  //!can roomNum be a letter?
-  if (roomNum.length >= 4) throw "Room number cannot be that long"
-  return checkStr(roomNum);
-}
-
-//
-function checkAppliances(appliancesIncluded) {
-  for (let i = 0; i < appliancesIncluded.length; i++) 
-    if(/^\d+$/.test(appliancesIncluded[i])) throw "Appliances Included cannot contain only numbers"
-  
-  return checkArr(appliancesIncluded);
-}
-
-//
-function checkPets(maxPets) {
-  if ( typeof maxPets !== 'boolean' ) throw "Pets must be either true or false."
-  if (maxPets === null) throw "value for laundry must be supplied"
-  if (maxPets) maxPets = "Yes"
-  else maxPets = "No"
-  return maxPets;
-}
-
-//
-function checkUtilities(utilitiesIncluded) {
-  for (let i = 0; i < utilitiesIncluded.length; i++) 
-    if(/^\d+$/.test(utilitiesIncluded[i])) throw "Utilities Included cannot contain only numbers"
-  
-  return checkArr(utilitiesIncluded);
-}
-function checkFile(file) {
-  
-  return file;
+function checkWordList(words, definitions, numCorrect, numIncorrect) {
+  return {
+    words:checkArr(words), 
+    definitions:checkArr(definitions), 
+    numCorrect:checkNum(numCorrect), 
+    numIncorrect:checkNum(numIncorrect)
+  };
 }
 
 //function that returns a object of all the trimmed parameters for apartments.js file
@@ -196,35 +121,6 @@ function checkApartmentParameters(userName, apartmentName, streetAddress,rentPer
 file: checkFile(file) };
 }
 
-/** FUNCTIONS USED FOR REVIEWS */
-
-function checkReviewerName(a) {
-  if (!a) throw "must include your name";
-  return checkStr(a);
-}
-
-function checkReview(a) {
-  if (!a) throw "must include a review";
-  return checkStr(a);
-}
-
-function checkRating(a) {
-  if (!a) throw "must include a rating";
-  //checkNumber(a)
-  a = parseInt(a);
-  if (isNaN(a)) throw "Must be a number from 1-5";
-  if (a < 1 || a > 5) throw "Rating not in range 1-5";
-  return a;
-}
-
-function checkReviewsParameters(apartmentId, userName, comments, rating) {
-  return {
-    apartmentId: checkID(apartmentId.toString()), 
-    userName: checkUsername(userName), 
-    comments: checkReview(comments), 
-    rating: checkRating(rating)
-  }
-}
 
 //FUNCTIONS FOR DATA/USERS.JS
 function checkEmail(email) {
@@ -232,25 +128,11 @@ function checkEmail(email) {
   return checkStr(email);
 }
 
-function checkGender(gender){
-  if (!gender) throw "must supply a gender"
-  return checkStr(gender);
-}
 
 function checkAge(age) {
   age = checkNum(age)
   if (age < 18) throw "You must be atleast 18 years old"
   return age;
-}
-
-function checkCity(city) {
-  
-  return checkStr(city);
-}
-
-function checkState(state){
-
-  return checkStr(state);
 }
 
 function checkUsername(username) {
@@ -280,13 +162,11 @@ function checkPassword(password) {
   return trimmed;
 }
 
-function checkUserParameters(firstName, lastName, email, gender, age, username, password) {
+function checkUserParameters(firstName, lastName, email, username, password) {
   return {
     firstName:checkName(firstName), 
     lastName:checkName(lastName), 
-    email:checkEmail(email), 
-    gender: checkGender(gender), 
-    age:checkAge(age), 
+    email:checkEmail(email),  
     username: checkUsername(username),
     password: checkPassword(password)
   }
@@ -307,7 +187,7 @@ function checkUserParameters1(userID, firstName, lastName, email, gender, age, u
 module.exports = {
   checkApartmentParameters,
   checkID,
-  checkReviewsParameters,
+  checkWordList,
   checkUserParameters,
   checkUserParameters1,
   checkUsername,

@@ -1,8 +1,10 @@
 const quizData = require("./quiz");
 const usersData = require("./users");
+const wordListData = require("./list");
 
 
 module.exports = {
-  quizzes: quizData,
+  wordList: wordListData,
   users: usersData
+
 };

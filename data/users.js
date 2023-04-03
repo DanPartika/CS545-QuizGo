@@ -9,7 +9,6 @@ const createUser = async (
   firstName,
   lastName,
   email,
-  age,
   username, 
   password
   ) => {

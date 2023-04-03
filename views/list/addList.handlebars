@@ -1,0 +1,28 @@
+  {{!Page where user can upload their vocab list, must be logged in}}
+  <head>
+    <meta charset="UTF-8">
+    <title>Upload Word-Definition Pairs</title>
+  </head>
+  <body>
+    <h1>Upload Word-Definition Pairs</h1>
+    <form id="word-def-form">
+      <label for="num-pairs">How many word-definition pairs would you like to input?</label>
+      <select id="num-pairs" name="numPairs">
+        {{#each numPairs}}
+          <option value="{{this}}">{{this}}</option>
+        {{/each}}
+      </select>
+      <br>
+      <div id="input-container">
+        {{#each wordDefPairs}}
+          <div class="word-def-pair">
+            <label for="{{this.inputId}}-word">Word:</label>
+            <input type="text" id="{{this.inputId}}-word" name="{{this.inputName}}[word]" required>
+            <label for="{{this.inputId}}-definition">Definition:</label>
+            <input type="text" id="{{this.inputId}}-definition" name="{{this.inputName}}[definition]" required>
+          </div>
+        {{/each}}
+      </div>
+      <button type="submit">Submit</button>
+    </form>
+  </body>
