@@ -1,7 +1,7 @@
 //require express, express router and bcrypt as shown in lecture code
 const express = require('express');
 const { checkUsername, checkPassword } = require('../helpers');
-const { createUser, checkUser } = require('../data/users');
+const { createUser, checkUser, getUser } = require('../data/users');
 const router = express.Router();
 const xss = require('xss');
 
@@ -33,8 +33,8 @@ router
     let email = xss(userData.emailInput);
     let username = xss(userData.usernameInput);
     let password = xss(userData.passwordInput);
-    
     let register = {};
+
     try {
       register = await createUser(firstname, lastname, email, username, password);
     } catch (e) {
@@ -56,12 +56,20 @@ router
  
 router
   .route('/login')
+  .get(async (req, res) => {
+    try {
+      if (req.session.user) return res.redirect('/');
+      else return res.render('userAccount/login',{user:req.session.user});
+    } catch (error) {
+      return res.render('error', {title: "Error", message: error})
+    }
+    
+  })
   .post(async (req, res) => {
     //code here for POST
-    //let { username, password } = req.body
     let userData = req.body;
-    let username = userData.usernameInput
-    let password = userData.passwordInput
+    let username = xss(userData.usernameInput)
+    let password = xss(userData.passwordInput)
     let authCookie = {};
     let user = '';
     try {
@@ -70,20 +78,22 @@ router
       authCookie = await checkUser(user, pass);
     } catch (e) {
       let templateData = {
-        title: 'Login',
-        error: e
+        title: 'Login Error',
+        error: e,
+        user:req.session.user
       }
-      return res.status(400).render('userAccount/login', templateData)
+      return res.status(400).render('error', templateData)
     }
     if (authCookie.authenticatedUser) {
       req.session.user = {
         username: user
       }
-      return res.redirect('/protected')
+      return res.redirect('/users/protected'); //Where does this go?
     } else {
       let templateData = {
         title: 'Login',
-        error: 'You did not provide a valid username and/or password.'
+        error: 'You did not provide a valid username and/or password.',
+        user: req.session.user
       }
       return res.status(400).render('userAccount/login', templateData)
     }
@@ -93,20 +103,38 @@ router
   .route('/protected')
   .get(async (req, res) => {
     //code here for GET
-    let curDate = new Date();
-    let templateData = {
-      username: req.session.user.username,
-      date: curDate
+    console.log("9");
+    if (req.session.user) {
+      console.log("Good");
+      try {
+        let curDate = new Date();
+        console.log("Good1");
+        let user = await getUser(req.session.user.username);
+        console.log("Good2");
+        let templateData = {
+          username: req.session.user.username, 
+          date: curDate,
+          user: user //add whatever else here
+        }
+        console.log("Good3");
+        return res.render('userAccount/userpage', templateData)
+      } catch (error) {
+        return res.render('error',{title:"Error: Cannot get account page",error:error,user:req.session.user})
+      }
+
+    } else {
+      console.log("Bad");
+      return res.redirect('/users/login');
     }
-    return res.render('private', templateData) //??????
   })
 
 router
   .route('/logout')
   .get(async (req, res) => {
     //code here for GET
+    let username = req.session.user.username;
     req.session.destroy();
-    res.status(200).render('userAccount/logout', { title: "Logged Out" });
+    res.status(200).render('userAccount/logout', { title: "Logged Out",username:username});
   })
 
 module.exports = router;

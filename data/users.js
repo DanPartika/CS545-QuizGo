@@ -1,7 +1,6 @@
 const helpers = require("../helpers");
 const { users } = require('../config/mongoCollections');
 const bcrypt = require('bcrypt');
-const { ObjectId } = require("mongodb");
 const saltRounds = 4;
 
 const createUser = async (
@@ -12,16 +11,11 @@ const createUser = async (
   password
   ) => {
   //check if username exists
-  console.log("1");
   let params = helpers.checkUserParameters(firstName, lastName, email, username, password);
   if(!params) throw "error in checking reviews parameters"
-  console.log("2");
   const usersCollection = await users();
-  console.log("3");
   const account = await usersCollection.findOne({ username: params.username });
-  console.log("4");
   if (account !== null) throw `Account with username ${params.username} exists already.`;
-  console.log("5");
   const UserEmail = await usersCollection.findOne({ email: params.email });
   if (UserEmail !== null) throw `Account with email ${params.email} exists already.`;
 
@@ -66,9 +60,13 @@ const checkUser = async (username, password) => { //login verfier
 };
 
 const getUser = async (username) => {
-  username = username.trim();
+  console.log("1");
+  username = helpers.checkUsername(username);
+  console.log("2");
   const usersCollection = await users();
+  console.log("3");
   const user = await usersCollection.findOne({username: username});
+  console.log("4");
   if (user === null) throw "No user with that username found";
   user._id = user._id.toString();
   return user;
