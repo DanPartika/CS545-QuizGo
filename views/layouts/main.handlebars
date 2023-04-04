@@ -9,49 +9,45 @@
 </head>
 
 <div class="apt_title">
-<header>
-  <h1> QuizGo </h1>
-  <nav>
+  <header>
+    <h1> QuizGo </h1>
+    {{!insert some logo or banner here}}
+    <nav>
 
-  <div class="title_p">     
-    <form id="homepage-view" action="/" method="GET"> 
-      <button class="Homepage-button" type="submit"> Homepage </button>
-    </form>
-  </div> 
-   
-    <div class="apartment_p">    
-      <form id="apartments-form" action="/apartments" method="GET"> 
-        <button class="Apartments-button" type="submit"> Word Lists </button>
-      </form>
-    </div>
-    
-<div class="account_p">   
-    <form id="account-form" action="/users/protected" method="GET"> 
-      <button class="Account-button" type="submit"> Account </button>
-    </form>
-     </div>
-
-    <div class="log_p">  
-      {{#if user.username}}
-        <form id="logout-form" action="/users/logout" method="GET"> 
-          <button class="logout-button" type = "submit"> Logout </button>
+      <div class="title_p">     
+        <form id="homepage-view" action="/" method="GET"> 
+          <button class="Homepage-button" type="submit"> Homepage </button>
         </form>
-  
-      {{else}}
-        <form id="login-form" action="/users/login" method="GET"> 
-          <button class="Login-Signup-button" type = "submit"> LogIn/Signup </button>
+      </div> 
+      
+      <div class="apartment_p">    
+        <form id="list-form" action="/lists" method="GET"> 
+          <button class="list-button" type="submit"> Word Lists </button>
         </form>
+      </div>
+      
+      <div class="account_p">   
+        <form id="account-form" action="/users/protected" method="GET"> 
+          <button class="Account-button" type="submit"> Account </button>
+        </form>
+      </div>
 
-      {{/if}}
-    </div>
-  </nav>
-</header>
+      <div class="log_p">  
+        {{#if user.username}}
+          <form id="logout-form" action="/users/logout" method="GET"> 
+            <button class="logout-button" type = "submit"> Logout </button>
+          </form>
+        {{else}}
+          <form id="login-form" action="/users/login" method="GET"> 
+            <button class="Login-Signup-button" type = "submit"> LogIn/Signup </button>
+          </form>
+        {{/if}}
+      </div>
+    </nav>
+  </header>
 </div>
 <body>
-    <main>
-        {{{body}}}
-    </main>
-
+  {{{body}}}
 </body>
 
 

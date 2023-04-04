@@ -92,8 +92,9 @@ function checkLaundry(laundry) {
   return laundry;
 }
 
-function checkWordList(words, definitions, numCorrect, numIncorrect) {
+function checkWordList(name, words, definitions, numCorrect, numIncorrect) {
   return {
+    name: checkStr(name),
     words:checkArr(words), 
     definitions:checkArr(definitions), 
     numCorrect:checkNum(numCorrect), 
@@ -101,26 +102,13 @@ function checkWordList(words, definitions, numCorrect, numIncorrect) {
   };
 }
 
-//function that returns a object of all the trimmed parameters for apartments.js file
-function checkApartmentParameters(userName, apartmentName, streetAddress,rentPerMonth,rentDuration, maxResidents, numBedrooms, numBathrooms, laundry, floorNum, roomNum, appliancesIncluded, maxPets, utilitiesIncluded,file) {
-  return { 
-  userName: checkUsername(userName),
-  apartmentName: checkName(apartmentName),
-  streetAddress: checkAddress(streetAddress),
-  rentPerMonth: checkRent(rentPerMonth),
-  rentDuration: checkRentDuration(rentDuration),
-  maxResidents: checkResidents(maxResidents),
-  numBedrooms: checkBedrooms(numBedrooms),
-  numBathrooms: checkBathrooms(numBathrooms),
-  laundry: checkLaundry(laundry),
-  floorNum: checkFloors(floorNum),
-  roomNum: checkRoomNum(roomNum),
-  appliancesIncluded: checkAppliances(appliancesIncluded),
-  maxPets: checkPets(maxPets),
-  utilitiesIncluded: checkUtilities(utilitiesIncluded),
-file: checkFile(file) };
+function checkAddWord(id, word, definition) {
+  return {
+    id: checkID(id),
+    word: checkStr(word),
+    definition: checkStr(definition)
+  };
 }
-
 
 //FUNCTIONS FOR DATA/USERS.JS
 function checkEmail(email) {
@@ -189,5 +177,6 @@ module.exports = {
   checkUserParameters,
   checkUserParameters1,
   checkUsername,
-  checkPassword
+  checkPassword,
+  checkAddWord
 };

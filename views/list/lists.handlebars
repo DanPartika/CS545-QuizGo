@@ -1,1 +1,16 @@
 {{!Page where users can browse other people's lists. Add a search by feature}}
+
+<ul>
+  {{#each list}}
+  <li>
+    <a href="/lists/list/{{this.user}}">{{this.apartmentName}} Floor: {{this.floorNum}}<a>
+  </li>
+  {{/each}}
+</ul>
+
+<footer>
+  <form id="addNewList-form" action="/lists/addList" method="GET">
+    <label for="newList">Add new List</label>
+    <button type="submit" class="plus">+</button>
+  </form>
+</footer>

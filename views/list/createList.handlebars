@@ -1,0 +1,11 @@
+  {{!Page where user can upload their vocab list, must be logged in}}
+  {{#if error}}
+  <h2> {{title}} </h2>
+  <p class="error">{{error}}</p>
+  {{/if}}
+    <h1>Create WordList</h1>
+    <form id="wordListform" action="/lists/createList" method="POST">
+      <label for="wordlistNameInput">Enter name of list here:</label>
+      <input for="wordlistNameInput" name="wordlistNameInput" type="text" id="wordlistNameInput" required/>
+      <button type="submit">Submit</button>
+    </form>

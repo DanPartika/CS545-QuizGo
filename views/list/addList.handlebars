@@ -1,28 +1,17 @@
   {{!Page where user can upload their vocab list, must be logged in}}
-  <head>
-    <meta charset="UTF-8">
-    <title>Upload Word-Definition Pairs</title>
-  </head>
-  <body>
-    <h1>Upload Word-Definition Pairs</h1>
-    <form id="word-def-form">
-      <label for="num-pairs">How many word-definition pairs would you like to input?</label>
-      <select id="num-pairs" name="numPairs">
-        {{#each numPairs}}
-          <option value="{{this}}">{{this}}</option>
-        {{/each}}
-      </select>
-      <br>
-      <div id="input-container">
-        {{#each wordDefPairs}}
-          <div class="word-def-pair">
-            <label for="{{this.inputId}}-word">Word:</label>
-            <input type="text" id="{{this.inputId}}-word" name="{{this.inputName}}[word]" required>
-            <label for="{{this.inputId}}-definition">Definition:</label>
-            <input type="text" id="{{this.inputId}}-definition" name="{{this.inputName}}[definition]" required>
-          </div>
-        {{/each}}
-      </div>
+  {{#if error}}
+  <h2> {{title}} </h2>
+  <p class="error">{{error}}</p>
+  {{/if}}
+    <h1>Create WordList</h1>
+    {{#each list}}
+      <h2>Name: {{this.name}}</h2> <strong>{{this.word}}</strong><p>{{this.definition}}</p>
+    {{/each}}
+    <form id="wordListform" action="/lists/addList" method="POST">
+      <label for="wordInput">Enter word here:</label>
+      <input for="wordInput" name="wordInput" type="text" id="wordInput" required/>
+      
+      <label for="definitionInput">Enter name of list here:</label>
+      <input for="definitionInput" name="definitionInput" type="text" id="definitionInput" required/>
       <button type="submit">Submit</button>
     </form>
-  </body>

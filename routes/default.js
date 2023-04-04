@@ -8,7 +8,7 @@ const path = require('path');
 const xss = require("xss");
 
 router.route("/") //homepage
-  .get(async (req, res) => {
+  .get(async (req, res) => { //show all lists
     //code here for GET
     //return res.sendFile(path.resolve('static/homepage.html'));
     try {
