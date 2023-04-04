@@ -171,7 +171,6 @@ function checkUserParameters1(userID, firstName, lastName, email, userName){
 
 
 module.exports = {
-  checkApartmentParameters,
   checkID,
   checkWordList,
   checkUserParameters,
