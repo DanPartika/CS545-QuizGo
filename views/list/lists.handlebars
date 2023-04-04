@@ -3,13 +3,13 @@
 <ul>
   {{#each list}}
   <li>
-    <a href="/lists/list/{{this.user}}">{{this.apartmentName}} Floor: {{this.floorNum}}<a>
+    <a href="/lists/list/{{this.user}}">{{this.name}} Word: {{this.word}}<a>
   </li>
   {{/each}}
 </ul>
 
 <footer>
-  <form id="addNewList-form" action="/lists/addList" method="GET">
+  <form id="addNewList-form" action="/lists/createList" method="GET">
     <label for="newList">Add new List</label>
     <button type="submit" class="plus">+</button>
   </form>

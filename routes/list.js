@@ -42,12 +42,10 @@ router.route("/createList")
       if (req.session.user) {
         let wordListData = req.body;
         let name = xss(wordListData.wordlistNameInput);
-        let listID = await listsFunc.createList(name, [],[],0,0);
-
+        let listID = await listsFunc.createList(name,[],[],0,0);
+        
         return res.render('list/addList', {list:"none"});
-      } else {
-        return res.render('userAccount/login',{user:req.session.user})
-      }
+      } else return res.render('userAccount/login',{user:req.session.user, error:"you must be logged in to create list"});
     } catch (error) {
       return res.render('error',{title:error,user:req.session.user})
     }

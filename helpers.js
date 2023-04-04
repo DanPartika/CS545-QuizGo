@@ -11,13 +11,11 @@ function checkStr(str) {
 
 //accepts lists of strings
 function checkArr(arr) {
-  let arrInvalidFlag = false;
   if (!arr || !Array.isArray(arr)) throw "You must provide an array";
-  if (arr.length === 0) throw "you must provide a string";
+  //if (arr.length === 0) throw "Array cannot be length 0";
   arr.forEach(str => {
     checkStr(str);
   });
-  if (arrInvalidFlag) throw "One or more values is not a string or is an empty string";
   return arr;
 }
 
