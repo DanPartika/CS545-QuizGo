@@ -7,7 +7,7 @@ const createList = async(name, words, definitions, numCorrect, numIncorrect) => 
   let params = helpers.checkWordList(name, words, definitions, numCorrect, numIncorrect);
   if (!params) throw "Error in creating word list";
   const wordListCollection = await lists();
-  const existingLst = await wordListCollection.findOne({ words:params.words, definitions:params.definitions, numCorrect:params.numCorrect, numIncorrect:params.numIncorrect});
+  const existingLst = await wordListCollection.findOne({ name:params.name, words:params.words, definitions:params.definitions, numCorrect:params.numCorrect, numIncorrect:params.numIncorrect});
   if (existingLst !== null) throw `This word list has been listed already.`;
   let today = new Date();
   let mm = String(today.getMonth() + 1).padStart(2, "0");
@@ -35,14 +35,14 @@ const addWordsToList = async(id, word, definition) => {
   let params = helpers.checkAddWord(id, word, definition);
   if (!params) throw "Error in adding to word list";
   const wordListCollection = await lists();
-  const list = await getWordListById(id);
-  if (list !== null) throw `This word list does not exist.`;
+  const list = await getWordListById(id.toString());
+  //if (list !== null) throw `This word list does not exist.`;
   let wrds = list.words;
   wrds[list.words.length] = params.word;
   let defs = list.definitions;
   defs[list.definitions.length] = params.definition;
   let newWordList = {
-    id: id,
+    _id: id,
     words:wrds, 
     definitions:defs, 
     numCorrect:list.numCorrect, 
@@ -50,7 +50,7 @@ const addWordsToList = async(id, word, definition) => {
     numIncorrect:list.numIncorrect
   }
   const updateInfo = await wordListCollection.replaceOne(
-    {_id: ObjectId(id) },
+    {_id: new ObjectId(id) },
     newWordList
     );
     if(!updateInfo.acknowledged || updateInfo.matchedCount !== 1 || updateInfo.modifiedCount !== 1) throw "cannot update wordlist"
@@ -72,8 +72,8 @@ const getAllWordLists = async () => {
 
 const getWordListById = async (listId) => {
   listId = helpers.checkID(listId);
-  const wordList = await getAllWordLists();
-  const newLists = await wordList.findOne({_id: ObjectId(listId)});
+  const wordList = await lists();
+  const newLists = await wordList.findOne({_id: new ObjectId(listId)});
   if (!newLists) throw "No word list with that id";
   newLists._id = newLists._id.toString();
   return newLists;

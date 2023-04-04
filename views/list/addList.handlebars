@@ -3,11 +3,9 @@
   <h2> {{title}} </h2>
   <p class="error">{{error}}</p>
   {{/if}}
-    <h1>Create WordList</h1>
-    {{#each list}}
-      <h2>Name: {{this.name}}</h2> <strong>{{this.word}}</strong><p>{{this.definition}}</p>
-    {{/each}}
-    <form id="wordListform" action="/lists/addList" method="POST">
+    <h1>Add word-definition pairs to {{list.name}}</h1>
+      <h2>Name: {{list.name}}</h2> <strong>{{list.word}}</strong><p>{{list.definition}}</p>
+    <form id="wordListform" action="/lists/addList/{{list._id}}" method="POST">
       <label for="wordInput">Enter word here:</label>
       <input for="wordInput" name="wordInput" type="text" id="wordInput" required/>
       

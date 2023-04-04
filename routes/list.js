@@ -43,8 +43,8 @@ router.route("/createList")
         let wordListData = req.body;
         let name = xss(wordListData.wordlistNameInput);
         let listID = await listsFunc.createList(name,[],[],0,0);
-        
-        return res.render('list/addList', {list:"none"});
+        let list = await listsFunc.getWordListById(listID);
+        return res.render('list/addList', {list:list});
       } else return res.render('userAccount/login',{user:req.session.user, error:"you must be logged in to create list"});
     } catch (error) {
       return res.render('error',{title:error,user:req.session.user})
@@ -64,11 +64,14 @@ router.route("/createList")
     try {
       if (req.session.user) {
         let wordListData = req.body;
-        let word = xss(wordListData.wordsInput);
-        let definition = xss(wordListData.defInput);
-        let listID = listsFunc.addWordsToList(req.params.listID, word, definition);
-        let list = listsFunc.getWordListById(req.params.listID);
-        return res.render('list/addList', )
+        let word = xss(wordListData.wordInput);
+        let definition = xss(wordListData.definitionInput);
+        console.log("h");
+        let listID = await listsFunc.addWordsToList(req.params.listID, word, definition);
+        console.log("i");
+        let list = await listsFunc.getWordListById(listID);
+        console.log("j");
+        return res.render('list/addList', {list:list});
       } else {
         return res.render('userAccount/login',{user:req.session.user})
       }

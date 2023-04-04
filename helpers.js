@@ -20,12 +20,8 @@ function checkArr(arr) {
 }
 
 function checkNum(num) {
-  if (!num) throw "You must provide a valid number. ";
   if (isNaN(num)) throw `${num} must be a number`;
-  if (num.toString().includes('.')) throw `${num} cannot include '.'`;
-  let n = parseInt(num);
-  if (n <= -1) throw "number must be positive";
-  return n;
+  return num;
 }
 
 function checkID(id) {
@@ -45,50 +41,7 @@ function checkName(apartmentName) {
   return checkStr(apartmentName);
 }
 
-//The street address of the specified apartment
-function checkAddress(streetAddress) {
-  let splitAddress = streetAddress.split(' ');
-  let HobokenStreets = ["Adams s", "Bloomfield s", "Castle Point Terrace","Clinton s", "Eighth s","Eleventh s",
-        "Fifteenth s","Fifth s", "First s","Fourteenth s","Fourth s","Garden s","Grand s","Grove s","Harrison s","Henderson s",
-        "Hudson P","Hudson S","Jackson s","Jefferson s","Madison s","Marshall s","Monroe s","Newark s","Ninth s","Observer h",
-        "Park A","Paterson a","River s","River Terrace","Second s","Seventh s","Sinatra Drive","Sixteenth s",
-        "Sixth s","Tenth s","Third s","Thirteenth s","Twelfth s","Vezzetti Way","Washington s","Willow a"];
-  let checker = true;
-  for (let i = 0; i < HobokenStreets.length; i++) 
-    if (streetAddress.toLowerCase().includes(HobokenStreets[i].toLowerCase()) ) checker = false;
-  if(checker) throw `${streetAddress} is not a valid street name in Hoboken.`;
-  //specify a format ## street name
-  //!make sure this works with google map.
-  //if possible get all the streets in hoboken and make sure it is a street in hoboken --> be solved with google maps
-  
-  if(splitAddress[0].includes('.')) {
-    throw `${splitAddress[0]} is not a valid building number in Hoboken.`;
-  }
 
-  if(parseInt(splitAddress[0]) > 1600 ||  parseInt(splitAddress[0]) < 1) {
-    throw `${splitAddress[0]} is not a valid building number in Hoboken.`;
-  }
-
-  return checkStr(streetAddress);
-}
-
-
-//
-function checkRentDuration(rentDuration) {
-  if(!rentDuration) throw "must include rent duration"
-  if ( !(/\d/.test(rentDuration)) ) throw `${rentDuration} must contain a specified number of length`
-  let rntDur = rentDuration.trim();
-  return checkNum(rntDur);
-}
-
-//
-function checkLaundry(laundry) {
-  if ( typeof laundry !== 'boolean' ) throw "laundry must be either true or false."
-  if (laundry === null) throw "value for laundry must be supplied"
-  if (laundry) laundry = "Yes"
-  else laundry = "No"
-  return laundry;
-}
 
 function checkWordList(name, words, definitions, numCorrect, numIncorrect) {
   return {
@@ -114,12 +67,6 @@ function checkEmail(email) {
   return checkStr(email);
 }
 
-
-function checkAge(age) {
-  age = checkNum(age)
-  if (age < 18) throw "You must be atleast 18 years old"
-  return age;
-}
 
 function checkUsername(username) {
   if (! username) throw 'Username does not exist.'
@@ -170,6 +117,7 @@ function checkUserParameters1(userID, firstName, lastName, email, userName){
 
 module.exports = {
   checkID,
+  checkStr,
   checkWordList,
   checkUserParameters,
   checkUserParameters1,
