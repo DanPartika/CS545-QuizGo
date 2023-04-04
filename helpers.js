@@ -171,14 +171,12 @@ function checkUserParameters(firstName, lastName, email, username, password) {
     password: checkPassword(password)
   }
 }
-function checkUserParameters1(userID, firstName, lastName, email, gender, age, userName){
+function checkUserParameters1(userID, firstName, lastName, email, userName){
   return {
     userID: checkID(userID),
     firstName:checkName(firstName), 
     lastName:checkName(lastName), 
     email:checkEmail(email), 
-    gender: checkGender(gender), 
-    age:checkAge(age),
     userName: checkUsername(userName)
   }
 }

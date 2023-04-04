@@ -3,48 +3,54 @@ const express = require('express');
 const { checkUsername, checkPassword } = require('../helpers');
 const { createUser, checkUser } = require('../data/users');
 const router = express.Router();
+const xss = require('xss');
 
 router
   .route('/')
   .get(async (req, res) => {
     //code here for GET
     if (req.session.user) return res.redirect('/protected');
-    else return res.render('userLogin', {title: "Login"});
+    else return res.render('userAccount/login', {title: "Login"});
   });
 
 router
   .route('/register')
   .get(async (req, res) => {
     //code here for GET
-    if (req.session.user) return res.redirect('/protected');
-    else return res.render('userAccount/register', {user:req.session.user});
+    try {
+      if (req.session.user) return res.redirect('/protected');
+      else return res.render('userAccount/register', {user:req.session.user});
+    } catch (error) {
+      return res.render('error', {title: "Error", message: error})
+    }
   })
   .post(async (req, res) => {
     //code here for POST
     //let { usernameInput, passwordInput } = req.body
     let userData = req.body;
-    let username = userData.usernameInput
-    let password = userData.passwordInput
-    let register = {}
+    let firstname = xss(userData.firstnameInput);
+    let lastname = xss(userData.lastnameInput);
+    let email = xss(userData.emailInput);
+    let username = xss(userData.usernameInput);
+    let password = xss(userData.passwordInput);
+    
+    let register = {};
     try {
-      let user = checkUsername(username)
-      let pass = checkPassword(password)
-      register = await createUser(user, pass)
-
+      register = await createUser(firstname, lastname, email, username, password);
     } catch (e) {
       let templateData = {
         title: 'Register',
         error: e
       }
-      return res.status(400).render('userRegister', templateData)
+      return res.status(400).render('userAccount/register', templateData)
     }
-    if (register.insertedUser) return res.status(200).redirect('/');
+    if (register.insertedUser) return res.status(200).redirect('/'); //??when they log in send to homepage
     else {
       let templateData = {
         title: 'Register',
-        error: 'Internal Server Error'
+        error: 'Internal Server Error, please try again later'
       }
-      return res.status(500).render('userRegister', templateData)
+      return res.status(500).render('userAccount/register', templateData)
       }
   })
  
@@ -67,7 +73,7 @@ router
         title: 'Login',
         error: e
       }
-      return res.status(400).render('userLogin', templateData)
+      return res.status(400).render('userAccount/login', templateData)
     }
     if (authCookie.authenticatedUser) {
       req.session.user = {
@@ -79,7 +85,7 @@ router
         title: 'Login',
         error: 'You did not provide a valid username and/or password.'
       }
-      return res.status(400).render('userLogin', templateData)
+      return res.status(400).render('userAccount/login', templateData)
     }
   })
 
@@ -92,7 +98,7 @@ router
       username: req.session.user.username,
       date: curDate
     }
-    return res.render('private', templateData)
+    return res.render('private', templateData) //??????
   })
 
 router
@@ -100,8 +106,7 @@ router
   .get(async (req, res) => {
     //code here for GET
     req.session.destroy();
-    res.status(200).render('logout', { title: "Logged Out" });
+    res.status(200).render('userAccount/logout', { title: "Logged Out" });
   })
-
 
 module.exports = router;

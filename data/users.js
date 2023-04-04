@@ -1,7 +1,6 @@
 const helpers = require("../helpers");
 const { users } = require('../config/mongoCollections');
 const bcrypt = require('bcrypt');
-//const { getApartmentById, removeApartment } = require("./apartments");
 const { ObjectId } = require("mongodb");
 const saltRounds = 4;
 
@@ -13,12 +12,16 @@ const createUser = async (
   password
   ) => {
   //check if username exists
-  let params = helpers.checkUserParameters(firstName, lastName, email, age, username, password);
+  console.log("1");
+  let params = helpers.checkUserParameters(firstName, lastName, email, username, password);
   if(!params) throw "error in checking reviews parameters"
+  console.log("2");
   const usersCollection = await users();
+  console.log("3");
   const account = await usersCollection.findOne({ username: params.username });
+  console.log("4");
   if (account !== null) throw `Account with username ${params.username} exists already.`;
-
+  console.log("5");
   const UserEmail = await usersCollection.findOne({ email: params.email });
   if (UserEmail !== null) throw `Account with email ${params.email} exists already.`;
 
@@ -33,12 +36,9 @@ const createUser = async (
     firstName: params.firstName,
     lastName: params.lastName,
     email: params.email,
-    age: params.age,
     userCreated: today,
     username: params.username,
-    password: hash,
-    userApartments: [],
-    userReviews: []    
+    password: hash, 
   }
   const insertInfo = await usersCollection.insertOne(newUser);
   if (! insertInfo.acknowledged || ! insertInfo.insertedId) throw 'Could not add user';
@@ -73,8 +73,6 @@ const getUser = async (username) => {
   user._id = user._id.toString();
   return user;
 };
-
-
 
 
 module.exports = {createUser, checkUser, getUser};

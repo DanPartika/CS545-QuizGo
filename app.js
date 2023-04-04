@@ -7,6 +7,8 @@ const session = require('express-session');
 
 app.use(express.json())
 app.use(express.urlencoded({ extended: true }))
+app.use(express.static('images'));
+app.use(express.static('views')); //? idk about this
 
 app.use(session({
   name: 'AuthCookie',
@@ -36,9 +38,6 @@ app.use(async (req, res, next) => {
 
 app.engine('handlebars', exphbs.engine({ defaultLayout: 'main' }))
 app.set('view engine', 'handlebars')
-
-
-
 
 configRoutes(app);
 
