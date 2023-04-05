@@ -1,0 +1,66 @@
+.button {
+  background-color: #c91e1e;
+  color: #f2f2f2;
+  border: none;
+  padding: 8px 16px;
+  font-size: 16px;
+  cursor: pointer;
+  border-radius: 5px;
+}
+
+.button:hover {
+  background-color: #f2f2f2;
+  color: #c91e1e;
+}
+
+li{
+  color: rgb(185, 8, 8);
+  font-size: 15pt;
+}
+
+.plus{
+  padding: 0em 0.4em;
+}
+
+body {
+  background-color: #c4c4c4;
+  color: #f2f2f2;
+  font-family: Arial, sans-serif;
+}
+
+h1, h2, h3 {
+  color: #c91e1e;
+}
+
+a {
+  color: #c91e1e;
+  text-decoration: none;
+}
+
+p {
+  color: black;
+}
+
+a:hover {
+  color: #f2f2f2;
+  text-decoration: underline;
+}
+
+table {
+  border-collapse: collapse;
+  width: 100%;
+  border-radius: 5px;
+}
+
+table td, table th {
+  border: 1px solid #c91e1e;
+  padding: 8px;
+  text-align: left;
+}
+
+table th {
+  background-color: #c91e1e;
+  color: #f2f2f2;
+}
+
+

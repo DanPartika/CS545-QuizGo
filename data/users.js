@@ -60,13 +60,9 @@ const checkUser = async (username, password) => { //login verfier
 };
 
 const getUser = async (username) => {
-  console.log("1");
   username = helpers.checkUsername(username);
-  console.log("2");
   const usersCollection = await users();
-  console.log("3");
   const user = await usersCollection.findOne({username: username});
-  console.log("4");
   if (user === null) throw "No user with that username found";
   user._id = user._id.toString();
   return user;

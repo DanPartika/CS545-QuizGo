@@ -4,11 +4,15 @@ const app = express();
 const configRoutes = require('./routes');
 const exphbs = require('express-handlebars');
 const session = require('express-session');
+const path = require('path');
 
 app.use(express.json())
 app.use(express.urlencoded({ extended: true }))
 app.use(express.static('images'));
 app.use(express.static('views')); //? idk about this
+app.use(express.static('public'));
+app.use('/public', express.static(__dirname +'/public'));
+
 
 app.use(session({
   name: 'AuthCookie',

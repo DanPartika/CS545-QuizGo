@@ -5,7 +5,7 @@
   <meta charset="utf-8">
   <title>QuizGo</title>
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <link href="../../public/styles.css" type="text/css" rel="stylesheet">
+  <link href="../../public/main.css" rel="stylesheet">
 </head>
 
 {{!-- <div class="apt_title"> --}}
@@ -14,35 +14,34 @@
     {{!insert some logo or banner here}}
     <nav>
 
-      <div class="title_p">     
+  
         <form id="homepage-view" action="/" method="GET"> 
-          <button class="Homepage-button" type="submit"> Homepage </button>
+          <button type="submit"> Homepage </button>
         </form>
-      </div> 
-      
-      <div class="apartment_p">    
-        <form id="list-form" action="/lists" method="GET"> 
-          <button class="list-button" type="submit"> Word Lists </button>
-        </form>
-      </div>
-      
-      <div class="account_p">   
-        <form id="account-form" action="/users/protected" method="GET"> 
-          <button class="Account-button" type="submit"> Account </button>
-        </form>
-      </div>
 
-      <div class="log_p">  
+ 
+        <form id="list-form" action="/lists" method="GET"> 
+          <button type="submit"> Word Lists </button>
+        </form>
+
+      
+
+        <form id="account-form" action="/users/protected" method="GET"> 
+          <button type="submit"> Account </button>
+        </form>
+
+
+
         {{#if user.username}}
           <form id="logout-form" action="/users/logout" method="GET"> 
-            <button class="logout-button" type = "submit"> Logout </button>
+            <button type = "submit"> Logout </button>
           </form>
         {{else}}
           <form id="login-form" action="/users/login" method="GET"> 
-            <button class="Login-Signup-button" type = "submit"> LogIn/Signup </button>
+            <button type = "submit"> LogIn/Signup </button>
           </form>
         {{/if}}
-      </div>
+
     </nav>
   </header>
 {{!-- </div> --}}
