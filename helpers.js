@@ -43,13 +43,14 @@ function checkName(apartmentName) {
 
 
 
-function checkWordList(name, words, definitions, numCorrect, numIncorrect) {
+function checkWordList(name, username, words, definitions, numCorrect, numIncorrect) {
   return {
     name: checkStr(name),
-    words:checkArr(words), 
-    definitions:checkArr(definitions), 
-    numCorrect:checkNum(numCorrect), 
-    numIncorrect:checkNum(numIncorrect)
+    username: checkUsername(username),
+    words: checkArr(words), 
+    definitions: checkArr(definitions), 
+    numCorrect: checkNum(numCorrect), 
+    numIncorrect: checkNum(numIncorrect)
   };
 }
 
@@ -69,7 +70,7 @@ function checkEmail(email) {
 
 
 function checkUsername(username) {
-  if (! username) throw 'Username does not exist.'
+  if (!username) throw 'Username does not exist.'
   if (typeof username !== 'string') throw 'Username is not a string.'
   const trimmed = username.trim();
   if (trimmed.length < 1) throw 'Username must contain at least 4 characters.'

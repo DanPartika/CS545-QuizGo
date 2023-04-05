@@ -3,8 +3,8 @@ const lists = mongoCollections.wordList;
 const { ObjectId } = require("mongodb");
 const helpers = require("../helpers");
 
-const createList = async(name, words, definitions, numCorrect, numIncorrect) => {
-  let params = helpers.checkWordList(name, words, definitions, numCorrect, numIncorrect);
+const createList = async(name, username, words, definitions, numCorrect, numIncorrect) => {
+  let params = helpers.checkWordList(name,username, words, definitions, numCorrect, numIncorrect);
   if (!params) throw "Error in creating word list";
   const wordListCollection = await lists();
   const existingLst = await wordListCollection.findOne({ name:params.name, words:params.words, definitions:params.definitions, numCorrect:params.numCorrect, numIncorrect:params.numIncorrect});
@@ -16,11 +16,12 @@ const createList = async(name, words, definitions, numCorrect, numIncorrect) => 
   today = mm + "/" + dd + "/" + yyyy;
   let newWordList = {
     name: params.name,
+    user: username,
     words:params.words, 
     definitions:params.definitions, 
     numCorrect:params.numCorrect, 
-    datePosted: today,
-    numIncorrect:params.numIncorrect
+    numIncorrect:params.numIncorrect,
+    datePosted: today
   }
   const insertInfo = await wordListCollection.insertOne(newWordList);
   if (insertInfo.insertedCount === 0) throw "Could not add word list";
@@ -42,7 +43,8 @@ const addWordsToList = async(id, word, definition) => {
   let defs = list.definitions;
   defs[list.definitions.length] = params.definition;
   let newWordList = {
-    _id: id,
+    name:list.name,
+    username: list.user,
     words:wrds, 
     definitions:defs, 
     numCorrect:list.numCorrect, 
@@ -50,9 +52,9 @@ const addWordsToList = async(id, word, definition) => {
     numIncorrect:list.numIncorrect
   }
   const updateInfo = await wordListCollection.replaceOne(
-    {_id: new ObjectId(id) },
+    { _id: new ObjectId(id) },
     newWordList
-    );
+  );
     if(!updateInfo.acknowledged || updateInfo.matchedCount !== 1 || updateInfo.modifiedCount !== 1) throw "cannot update wordlist"
     const update = await getWordListById(id);
   

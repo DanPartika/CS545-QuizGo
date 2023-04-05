@@ -1,15 +1,40 @@
-  {{!Page where user can upload their vocab list, must be logged in}}
-  {{#if error}}
-  <h2> {{title}} </h2>
-  <p class="error">{{error}}</p>
-  {{/if}}
-    <h1>Add word-definition pairs to {{list.name}}</h1>
-      <h2>Name: {{list.name}}</h2> <strong>{{list.word}}</strong><p>{{list.definition}}</p>
-    <form id="wordListform" action="/lists/addList/{{list._id}}" method="POST">
-      <label for="wordInput">Enter word here:</label>
-      <input for="wordInput" name="wordInput" type="text" id="wordInput" required/>
-      
-      <label for="definitionInput">Enter name of list here:</label>
-      <input for="definitionInput" name="definitionInput" type="text" id="definitionInput" required/>
-      <button type="submit">Submit</button>
-    </form>
+{{!Page where user can upload their vocab list, must be logged in}}
+{{#if error}}
+<h2> {{title}} </h2>
+<p class="error">{{error}}</p>
+{{/if}}
+<h1>Add word-definition pairs to {{list.name}}</h1>
+<h2>Name: {{list.name}}</h2> 
+{{!-- {{#each list.words}}
+  <p class="display_word-def_pairs">{{this}}: {{lookup ../list.definitions @index}}</p>
+  {{else}}
+  <p>No words yet!</p>
+{{/each}} --}}
+<table>
+<thead>
+<tr>
+  <th>Word</th>
+  <th>Definition</th>
+</tr>
+</thead>
+<tbody>
+{{#each list.words}}
+  <tr>
+    <td>{{this}}</td>
+    <td>{{lookup ../list.definitions @index}}</td>
+  </tr>
+{{/each}}
+{{!-- {{else}}
+<tr>
+  <td colspan="2">No words yet!</td>
+</tr> --}}
+</tbody>
+</table>
+<form id="wordListform" action="/lists/addList/{{list._id}}" method="POST">
+  <label for="wordInput">Enter word here:</label>
+  <input for="wordInput" name="wordInput" type="text" id="wordInput" required/>
+  
+  <label for="definitionInput">Enter name of list here:</label>
+  <input for="definitionInput" name="definitionInput" type="text" id="definitionInput" required/>
+  <button type="submit">Submit</button>
+</form>

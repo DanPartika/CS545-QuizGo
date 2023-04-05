@@ -10,24 +10,22 @@ const xss = require("xss");
 router.route("/")
   .get(async (req, res) => { //display all the wordlists
     try {
-      
       let wordLists = [];
       wordLists = await listsFunc.getAllWordLists();
-      const data = {list:wordLists,user:req.session.user};
-      return res.render('list/lists', data);
+      return res.render('list/lists', {list:wordLists,user:req.session.user});
       
     } catch (error) {
       return res.render('error',{title:error,user:req.session.user})
     }
   });
 
-router.route("/list/:id") //view specific list
+router.route("/list/:listID") //view specific list
   .get(async (req, res) => {
-
+    let list = listsFunc.getWordListById(req.params.listID);
+    return res.render('list/list', {list: list, user:req.session.user});
   });
 
   
-
 router.route("/createList")
   .get(async (req, res) => { //get the page where you can add list
     try {
@@ -42,9 +40,10 @@ router.route("/createList")
       if (req.session.user) {
         let wordListData = req.body;
         let name = xss(wordListData.wordlistNameInput);
-        let listID = await listsFunc.createList(name,[],[],0,0);
+        let username = req.session.user.username;
+        let listID = await listsFunc.createList(name,username,[],[],0,0);
         let list = await listsFunc.getWordListById(listID);
-        return res.render('list/addList', {list:list});
+        return res.render('list/addList', {list:list, user:req.session.user});
       } else return res.render('userAccount/login',{user:req.session.user, error:"you must be logged in to create list"});
     } catch (error) {
       return res.render('error',{title:error,user:req.session.user})
@@ -54,7 +53,10 @@ router.route("/createList")
   router.route("/addList/:listID")
   .get(async (req, res) => { //get the page where you can add list
     try {
-      if (req.session.user) return res.render('list/addList',{title:"QuizGo",user:req.session.user});
+      if (req.session.user) {
+        let list = await listsFunc.getWordListById(req.params.listID); //if there is an error with this, it will error in the data function and get caught in this try/catch
+        return res.render('list/addList',{title:"QuizGo", list:list, user:req.session.user});
+      }
       else return res.render('userAccount/login',{user:req.session.user});
     } catch (error) {
       return res.render('error', {title:error,user:req.session.user});
@@ -66,12 +68,10 @@ router.route("/createList")
         let wordListData = req.body;
         let word = xss(wordListData.wordInput);
         let definition = xss(wordListData.definitionInput);
-        console.log("h");
-        let listID = await listsFunc.addWordsToList(req.params.listID, word, definition);
-        console.log("i");
-        let list = await listsFunc.getWordListById(listID);
-        console.log("j");
-        return res.render('list/addList', {list:list});
+        let list = await listsFunc.addWordsToList(req.params.listID, word, definition);
+        let list1 = await listsFunc.getWordListById(list._id);
+
+        return res.render('list/addList', {list:list1, user:req.session.user});
       } else {
         return res.render('userAccount/login',{user:req.session.user})
       }

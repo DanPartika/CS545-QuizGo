@@ -103,27 +103,21 @@ router
   .route('/protected')
   .get(async (req, res) => {
     //code here for GET
-    console.log("9");
     if (req.session.user) {
-      console.log("Good");
       try {
         let curDate = new Date();
-        console.log("Good1");
         let user = await getUser(req.session.user.username);
-        console.log("Good2");
         let templateData = {
           username: req.session.user.username, 
           date: curDate,
           user: user //add whatever else here
         }
-        console.log("Good3");
         return res.render('userAccount/userpage', templateData)
       } catch (error) {
         return res.render('error',{title:"Error: Cannot get account page",error:error,user:req.session.user})
       }
 
     } else {
-      console.log("Bad");
       return res.redirect('/users/login');
     }
   })
