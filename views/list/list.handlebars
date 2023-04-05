@@ -1,2 +1,27 @@
 {{!Page where user can see the list of words and select which game they would like to play}}
 {{!-- add a feature that if you are the user that created that list, you are able to edit it --}}
+{{#if error}}
+<h2> {{title}} </h2>
+<p class="error">{{error}}</p>
+{{/if}}
+<h2>Name: {{list.name}}</h2> 
+<table>
+  <thead>
+  <tr>
+    <th>Word</th>
+    <th>Definition</th>
+  </tr>
+  </thead>
+  <tbody>
+    {{#each list.words}}
+      <tr>
+        <td>{{this}}</td>
+        <td>{{lookup ../list.definitions @index}}</td>
+      </tr>
+    {{else}}
+      <tr>
+        <td colspan="2">No words yet!</td>
+      </tr>
+    {{/each}}
+  </tbody>
+</table>

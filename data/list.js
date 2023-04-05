@@ -44,7 +44,7 @@ const addWordsToList = async(id, word, definition) => {
   defs[list.definitions.length] = params.definition;
   let newWordList = {
     name:list.name,
-    username: list.user,
+    user: list.user,
     words:wrds, 
     definitions:defs, 
     numCorrect:list.numCorrect, 

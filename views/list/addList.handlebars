@@ -11,24 +11,24 @@
   <p>No words yet!</p>
 {{/each}} --}}
 <table>
-<thead>
-<tr>
-  <th>Word</th>
-  <th>Definition</th>
-</tr>
-</thead>
-<tbody>
-{{#each list.words}}
+  <thead>
   <tr>
-    <td>{{this}}</td>
-    <td>{{lookup ../list.definitions @index}}</td>
+    <th>Word</th>
+    <th>Definition</th>
   </tr>
-{{/each}}
-{{!-- {{else}}
-<tr>
-  <td colspan="2">No words yet!</td>
-</tr> --}}
-</tbody>
+  </thead>
+  <tbody>
+    {{#each list.words}}
+      <tr>
+        <td>{{this}}</td>
+        <td>{{lookup ../list.definitions @index}}</td>
+      </tr>
+    {{/each}}
+    {{!-- {{else}}
+    <tr>
+      <td colspan="2">No words yet!</td>
+    </tr> --}}
+  </tbody>
 </table>
 <form id="wordListform" action="/lists/addList/{{list._id}}" method="POST">
   <label for="wordInput">Enter word here:</label>
