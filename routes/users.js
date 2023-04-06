@@ -4,6 +4,7 @@ const { checkUsername, checkPassword } = require('../helpers');
 const { createUser, checkUser, getUser } = require('../data/users');
 const router = express.Router();
 const xss = require('xss');
+const { getWordListByCreatedUser } = require('../data/list');
 
 router
   .route('/')
@@ -107,12 +108,13 @@ router
       try {
         let curDate = new Date();
         let user = await getUser(req.session.user.username);
+        let userLists = await getWordListByCreatedUser(user.username);
         let templateData = {
-          username: req.session.user.username, 
           date: curDate,
-          user: user //add whatever else here
+          user: user,
+          userLists: userLists //add whatever else here
         }
-        return res.render('userAccount/userpage', templateData)
+        return res.render('userAccount/userpage', templateData);
       } catch (error) {
         return res.render('error',{title:"Error: Cannot get account page",error:error,user:req.session.user})
       }

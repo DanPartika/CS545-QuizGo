@@ -68,5 +68,13 @@ const getUser = async (username) => {
   return user;
 };
 
+// const getUserLists = async (username) => {
+//   username = helpers.checkUsername(username);
+//   const usersCollection = await users();
+//   const user = await usersCollection.findOne({username: username});
+//   if (user === null) throw "No user with that username found";
+//   user._id = user._id.toString();
+//   return user;
+// };
 
 module.exports = {createUser, checkUser, getUser};

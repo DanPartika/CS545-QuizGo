@@ -81,9 +81,25 @@ const getWordListById = async (listId) => {
   return newLists;
 }
 
+const getWordListByCreatedUser = async (username) => {
+  username = helpers.checkUsername(username);
+  const wordList = await getAllWordLists();
+  let newList = [], i=0;
+  wordList.forEach((list) => {
+    if(list.user == username) {
+      list._id = list._id.toString();
+      newList[i] = list;
+      i++;
+    }
+  });
+  if (i==0) throw "User has no lists created";
+  return newList;
+}
+
 module.exports= {
   createList,
   getAllWordLists,
   getWordListById,
-  addWordsToList
+  addWordsToList,
+  getWordListByCreatedUser
 }
