@@ -12,6 +12,10 @@
     <dt>Account Created</dt>
     <dd>{{user.userCreated}}</dd>
   </dl>
+  {{#if error}}
+    <h2> {{title}} </h2>
+    <p class="error">{{error}}</p>
+  {{/if}}
   {{#if userLists}}
     <h3>List of all user posted lists:</h3>
     {{#each userLists}}

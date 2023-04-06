@@ -132,11 +132,22 @@ const editList = async (listID, editNum) => {
   return update;
 }
 
+const removeList = async (listID) => {
+  listID = helpers.checkID(listID.toString());
+  const listCollection = await lists();
+  let list = await getWordListById(listID);
+  let listName = list.name;
+  const deletionInfo = await listCollection.deleteOne({ _id: new ObjectId(listID) });
+  if (deletionInfo.deletedCount === 0) throw `Could not delete List with id of ${listID}`;
+  return {list:listName};//`${listName} has been successfully deleted!`; //what do i want to return?
+};
+
 module.exports= {
   createList,
   getAllWordLists,
   getWordListById,
   addWordsToList,
   getWordListByCreatedUser,
-  editList
+  editList,
+  removeList
 }

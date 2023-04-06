@@ -117,4 +117,21 @@ router.route("/createList")
     }
   });
 
+  router.route("/deleteList/:listID")
+  .post(async (req, res) => { //if button to add list was clicked, we are here
+    try {
+      if (req.session.user) {
+        let list = await listsFunc.getWordListById(req.params.listID);
+        if (list.user != req.session.user.username) throw "you did not create this list";
+        let list1 = await listsFunc.removeList(req.params.listID);
+        if(list1.list != list.name) throw "could not delete"
+        return res.redirect('/users/protected');
+      } else {
+        return res.render('userAccount/login',{user:req.session.user})
+      }
+    } catch (error) {
+      return res.render('error',{title:error,user:req.session.user})
+    }
+  });
+
 module.exports = router;
