@@ -119,6 +119,7 @@ function checkUserParameters1(userID, firstName, lastName, email, userName){
 module.exports = {
   checkID,
   checkStr,
+  checkNum,
   checkWordList,
   checkUserParameters,
   checkUserParameters1,

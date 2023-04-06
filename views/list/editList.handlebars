@@ -1,1 +1,33 @@
 {{!Page if the user created the list, they can edit the words/definations and add more/remove words}}
+{{#if error}}
+<h2> {{title}} </h2>
+<p class="error">{{error}}</p>
+{{/if}}
+
+<h1>Current List:</h1>
+<table>
+  <thead>
+  <tr>
+    <th>Word</th>
+    <th>Definition</th>
+  </tr>
+  </thead>
+  <tbody>
+    {{#each list.words}}
+      <tr>
+        <td>{{this}}</td>
+        <td>{{lookup ../list.definitions @index}}</td>
+      </tr>
+    {{else}}
+      <tr>
+        <td colspan="2">No words yet!</td>
+      </tr>
+    {{/each}}
+  </tbody>
+</table>
+<form id="editList-form" action="/lists/editList/{{list._id}}" method="POST">
+  <label for="columnNum">Which column # would you like to edit? </label>
+  <input for="columnNum" name="columnNum" type="text" id="columnNum" required/>
+
+  <button type="submit">Submit</button>
+</form>

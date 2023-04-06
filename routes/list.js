@@ -6,6 +6,7 @@ const userFunc = require('../data/users');
 const helpers = require("../helpers");
 const path = require('path');
 const xss = require("xss");
+const { log } = require("console");
 
 router.route("/")
   .get(async (req, res) => { //display all the wordlists
@@ -73,6 +74,41 @@ router.route("/createList")
         let list1 = await listsFunc.getWordListById(list._id);
 
         return res.render('list/addList', {list:list1, user:req.session.user});
+      } else {
+        return res.render('userAccount/login',{user:req.session.user})
+      }
+    } catch (error) {
+      return res.render('error',{title:error,user:req.session.user})
+    }
+  });
+
+  router.route("/editList/:listID")
+  .get(async (req, res) => { //get the page where you can add list
+    try {
+      if (req.session.user) {
+        let list = await listsFunc.getWordListById(req.params.listID); //if there is an error with this, it will error in the data function and get caught in this try/catch
+        if (list.user != req.session.user.username) throw "you did not create this list";
+        return res.render('list/editList',{title:"QuizGo", list:list, user:req.session.user});
+      }
+      else return res.render('userAccount/login',{user:req.session.user});
+    } catch (error) {
+      return res.render('error', {title:error,user:req.session.user});
+    }
+  })
+  .post(async (req, res) => { //if button to add list was clicked, we are here
+    try {
+      if (req.session.user) {
+        let list = await listsFunc.getWordListById(req.params.listID);
+        if (list.user != req.session.user.username) throw "you did not create this list";
+        let columnEdit = req.body;
+        let columnNum = xss(columnEdit.columnNum);
+        let list1;
+        try {
+          list1 = await listsFunc.editList(req.params.listID, columnNum);
+        } catch (error) {
+          return res.render('list/editList', {title:"QuizGo", list:list, user:req.session.user, error: error});
+        }
+        return res.render('list/editList', {title:"QuizGo", list:list1, user:req.session.user});
       } else {
         return res.render('userAccount/login',{user:req.session.user})
       }

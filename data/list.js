@@ -45,10 +45,10 @@ const addWordsToList = async(id, word, definition) => {
   let newWordList = {
     name:list.name,
     user: list.user,
+    datePosted: list.datePosted,
     words:wrds, 
     definitions:defs, 
     numCorrect:list.numCorrect, 
-    datePosted: list.datePosted,
     numIncorrect:list.numIncorrect
   }
   const updateInfo = await wordListCollection.replaceOne(
@@ -96,10 +96,47 @@ const getWordListByCreatedUser = async (username) => {
   return newList;
 }
 
+const editList = async (listID, editNum) => {
+  listID = helpers.checkID(listID);
+  editNum = helpers.checkNum(editNum);
+  let list = await getWordListById(listID);
+  if (list === null) throw "This list doesn't exist"
+  if(editNum>list.words.length || editNum < 1) throw "that number doesn't exist"
+  let wordArr = list.words;
+  let x = wordArr.splice(editNum-1,1);
+  let defArr = list.definitions;
+  let y = defArr.splice(editNum-1,1);
+  let today = new Date();
+  let mm = String(today.getMonth() + 1).padStart(2, "0");
+  let dd = String(today.getDate()).padStart(2, "0");
+  let yyyy = today.getFullYear();
+  today = mm + "/" + dd + "/" + yyyy;
+  let updatedList = {
+    name:list.name,
+    user: list.user,
+    datePosted: list.datePosted,
+    dateModified: today,
+    words: wordArr, 
+    definitions: defArr, 
+    numCorrect:list.numCorrect,
+    numIncorrect:list.numIncorrect
+  }
+  let wordListCollection = await lists();
+  const updateInfo = await wordListCollection.replaceOne(
+    { _id: new ObjectId(listID) },
+    updatedList
+  );
+  if(!updateInfo.acknowledged || updateInfo.matchedCount !== 1 || updateInfo.modifiedCount !== 1) throw "cannot update apartment"
+  const update = await getWordListById(listID);
+  update._id = update._id.toString();
+  return update;
+}
+
 module.exports= {
   createList,
   getAllWordLists,
   getWordListById,
   addWordsToList,
-  getWordListByCreatedUser
+  getWordListByCreatedUser,
+  editList
 }

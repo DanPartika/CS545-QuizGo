@@ -37,7 +37,7 @@ a {
   text-decoration: none;
 }
 
-p {
+p, dt,dl,label {
   color: black;
 }
 
@@ -56,6 +56,7 @@ table td, table th {
   border: 1px solid #c91e1e;
   padding: 8px;
   text-align: left;
+  color: black;
 }
 
 table th {

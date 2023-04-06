@@ -12,26 +12,25 @@
     <dt>Account Created</dt>
     <dd>{{user.userCreated}}</dd>
   </dl>
-
   {{#if userLists}}
     <h3>List of all user posted lists:</h3>
-
     {{#each userLists}}
       <li>
         <a href="/lists/list/{{this._id}}">{{this.name}}</a>
+        <form id="addList-form" action="/lists/addList/{{this._id}}" method="GET">
+          <button type="submit" class="user-button"> Add words </button>
+        </form>
         <form id="editList-form" action="/lists/editList/{{this._id}}" method="GET">
-          <button type="submit" class="user-button"> Edit List </button>
+          <button type="submit" class="user-button"> Remove One Word </button>
         </form>
         <form id="deleteList-form" action="/lists/deleteList/{{this._id}}" method="POST">
-          <button type="submit" class="user-button"> Delete List </button>
+          <button type="submit" > Delete Whole List </button>
         </form>
       </li>
     {{/each}}
-
   {{else}}
     <p>No Lists posted yet by {{user.username}}</p>
   {{/if}}
-
 {{/if}}
-<a class="add-listButton" href="/lists/createList">Click here to add apartments</a>
+<a class="add-listButton" href="/lists/createList">Click here to create new word lists</a>
 <br>
