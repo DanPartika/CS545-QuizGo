@@ -1,53 +1,46 @@
 <!DOCTYPE html>
 <html lang="en">
 
-<head>
-  <meta charset="utf-8">
-  <title>QuizGo</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <link href="../../public/main.css" rel="stylesheet">
-</head>
+  <head>
+    <meta charset="utf-8">
+    <title>QuizGo</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="../../public/main.css" rel="stylesheet">
+  </head>
 
-{{!-- <div class="apt_title"> --}}
+  {{!-- <div class="apt_title"> --}}
   <header>
-    <h1> QuizGo </h1>
+    {{!-- <h1> QuizGo </h1> --}}
+    <div class="image">
+      <img src="../public/images/Logo.JPG">
+    </div>
     {{!insert some logo or banner here}}
-    <nav>
+    <nav class="menu-bar">
+      <form id="homepage-view" action="/" method="GET"> 
+        <button type="submit"> Homepage </button>
+      </form>
 
-  
-        <form id="homepage-view" action="/" method="GET"> 
-          <button type="submit"> Homepage </button>
+      <form id="list-form" action="/lists" method="GET"> 
+        <button type="submit"> Word Lists </button>
+      </form>
+
+      <form id="account-form" action="/users/protected" method="GET"> 
+        <button type="submit"> Account </button>
+      </form>
+
+      {{#if user.username}}
+        <form id="logout-form" action="/users/logout" method="GET"> 
+          <button type = "submit"> Logout </button>
         </form>
-
- 
-        <form id="list-form" action="/lists" method="GET"> 
-          <button type="submit"> Word Lists </button>
+      {{else}}
+        <form id="login-form" action="/users/login" method="GET"> 
+          <button type = "submit"> LogIn/Signup </button>
         </form>
-
-      
-
-        <form id="account-form" action="/users/protected" method="GET"> 
-          <button type="submit"> Account </button>
-        </form>
-
-
-
-        {{#if user.username}}
-          <form id="logout-form" action="/users/logout" method="GET"> 
-            <button type = "submit"> Logout </button>
-          </form>
-        {{else}}
-          <form id="login-form" action="/users/login" method="GET"> 
-            <button type = "submit"> LogIn/Signup </button>
-          </form>
-        {{/if}}
-
+      {{/if}}
     </nav>
   </header>
-{{!-- </div> --}}
-<body>
-  {{{body}}}
-</body>
-
-
+  {{!-- </div> --}}
+  <body>
+    {{{body}}}
+  </body>
 </html>

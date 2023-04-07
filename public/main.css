@@ -23,13 +23,13 @@ li{
 }
 
 body {
-  background-color: #c4c4c4;
+  background-color: #bbbbbb;
   color: #f2f2f2;
   font-family: Arial, sans-serif;
 }
 
 h1, h2, h3 {
-  color: #c91e1e;
+  color: #882f2f;
 }
 
 a {
@@ -64,4 +64,48 @@ table th {
   color: #f2f2f2;
 }
 
+.menu-bar {
+  background-color: #811414;
+  color: #fff;
+  position: relative;
+}
 
+/*? i dont think we need this nav, but idk */
+nav {
+  height: 50px;
+  display: flex;
+  justify-content: space-evenly; /* Center the contents horizontally */
+}
+
+.menu-bar ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex; /* Use flexbox for the list items */
+  flex-wrap: wrap; /*?maybe get rid of this*/
+  justify-content: space-between;
+}
+
+.menu-bar li {
+  margin: 0 20px; /*?10 px*/
+  position: relative;
+}
+
+.menu-bar button {
+  display: block;
+  color: #3f2626;
+  text-decoration: none;
+  padding: 10px; /*?10px*/
+  position: center;
+  transition: background-color 0.3s ease;
+}
+
+nav button:hover {
+  background-color: #720909;
+  color:#25a5d8;
+}
+
+.image {
+  width: 100%;
+  height: auto;
+}
