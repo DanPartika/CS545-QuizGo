@@ -6,7 +6,6 @@ const userFunc = require('../data/users');
 const helpers = require("../helpers");
 const path = require('path');
 const xss = require("xss");
-const { log } = require("console");
 
 router.route("/")
   .get(async (req, res) => { //display all the wordlists

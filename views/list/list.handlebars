@@ -5,6 +5,7 @@
 <p class="error">{{error}}</p>
 {{/if}}
 <h2>Name: {{list.name}}</h2> 
+<h3>Creator: {{list.user}}</h3>
 <table>
   <thead>
   <tr>
@@ -26,3 +27,12 @@
   </tbody>
 </table>
 {{!-- Add buttons to play games --}}
+<form id="playQuiz-form" action="/activity/quiz/{{this._id}}" method="GET">
+  <button type="submit" class="user-button"> Add words </button>
+</form>
+<form id="playFlashCards-form" action="/activity/flash-cards/{{this._id}}" method="GET">
+  <button type="submit" class="user-button"> Remove One Word </button>
+</form>
+<form id="playMatching-form" action="/activity/matching/{{this._id}}" method="GET">
+  <button type="submit" > Delete Whole List </button>
+</form>
