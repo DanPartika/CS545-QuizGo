@@ -39,20 +39,10 @@ router
     try {
       register = await createUser(firstname, lastname, email, username, password);
     } catch (e) {
-      let templateData = {
-        title: 'Register',
-        error: e
-      }
-      return res.status(400).render('userAccount/register', templateData)
+      return res.status(400).render('userAccount/register', {title: 'Register', error: e})
     }
     if (register.insertedUser) return res.status(200).redirect('/'); //??when they log in send to homepage
-    else {
-      let templateData = {
-        title: 'Register',
-        error: 'Internal Server Error, please try again later'
-      }
-      return res.status(500).render('userAccount/register', templateData)
-      }
+    else return res.status(500).render('userAccount/register', {title: 'Register', error: 'Internal Server Error, please try again later'})
   })
  
 router
@@ -78,26 +68,14 @@ router
       let pass = checkPassword(password);
       authCookie = await checkUser(user, pass);
     } catch (e) {
-      let templateData = {
-        title: 'Login Error',
-        error: e,
-        user:req.session.user
-      }
-      return res.status(400).render('error', templateData)
+      return res.status(400).render('error', {title: 'Login Error', error: e, user:req.session.user})
     }
     if (authCookie.authenticatedUser) {
       req.session.user = {
         username: user
       }
       return res.redirect('/users/protected'); //Where does this go?
-    } else {
-      let templateData = {
-        title: 'Login',
-        error: 'You did not provide a valid username and/or password.',
-        user: req.session.user
-      }
-      return res.status(400).render('userAccount/login', templateData)
-    }
+    } else return res.status(400).render('userAccount/login', {title: 'Login', error: 'You did not provide a valid username and/or password.', user: req.session.user})
   })
 
 router
@@ -109,12 +87,8 @@ router
         let curDate = new Date();
         let user = await getUser(req.session.user.username);
         let userLists = await getWordListByCreatedUser(user.username);
-        let templateData = {
-          date: curDate,
-          user: user,
-          userLists: userLists //add whatever else here
-        }
-        return res.render('userAccount/userpage', templateData);
+        if(Array.isArray(userLists)) return res.render('userAccount/userpage', {date: curDate, user: user, userLists: userLists});
+        else return res.render('userAccount/userpage', {date: curDate, user: user});
       } catch (error) {
         return res.render('error',{title:"Error: Cannot get account page",error:error,user:req.session.user})
       }

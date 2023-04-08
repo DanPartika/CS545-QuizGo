@@ -39,8 +39,18 @@ const addWordsToList = async(id, word, definition) => {
   const list = await getWordListById(id.toString());
   //if (list !== null) throw `This word list does not exist.`;
   let wrds = list.words;
-  wrds[list.words.length] = params.word;
+  wrds.forEach(w => {
+    if(w.toLowerCase() === word.toLowerCase()){
+      throw `${word} is already in the list`
+    }
+  });
   let defs = list.definitions;
+  defs.forEach(d=> {
+    if (d.toLowerCase() === definition.toLowerCase()) {
+      throw "Wordlist cannot contain the same definition"
+    }
+  });
+  wrds[list.words.length] = params.word;
   defs[list.definitions.length] = params.definition;
   let newWordList = {
     name:list.name,
@@ -92,7 +102,7 @@ const getWordListByCreatedUser = async (username) => {
       i++;
     }
   });
-  if (i==0) throw "User has no lists created";
+  if (i==0) return "User has no lists created";
   return newList;
 }
 
