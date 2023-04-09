@@ -27,12 +27,12 @@
   </tbody>
 </table>
 {{!-- Add buttons to play games --}}
-<form id="playQuiz-form" action="/activity/quiz/{{this._id}}" method="GET">
-  <button type="submit" class="user-button"> Add words </button>
+<form id="playQuiz-form" action="/activity/quiz/{{list._id}}" method="GET">
+  <button type="submit"> Quiz </button>
 </form>
-<form id="playFlashCards-form" action="/activity/flash-cards/{{this._id}}" method="GET">
-  <button type="submit" class="user-button"> Remove One Word </button>
+<form id="playFlashCards-form" action="/activity/flash-cards/{{list._id}}" method="GET">
+  <button type="submit"> Flash Cards </button>
 </form>
-<form id="playMatching-form" action="/activity/matching/{{this._id}}" method="GET">
-  <button type="submit" > Delete Whole List </button>
+<form id="playMatching-form" action="/activity/matching/{{list._id}}" method="GET">
+  <button type="submit" > Matching </button>
 </form>

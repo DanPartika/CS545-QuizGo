@@ -1,9 +1,16 @@
-<!DOCTYPE html>
-<html>
-  <title>Flashcard Game</title>
-<body>
+<h1> Flash Card Activity </h1>
+<form id="startForm">
+  <button class="start-button" type="submit"> Start Activity </button>
+</form>
+<ul class="outputs" id="results"></ul>
 
 
-  
+{{#each words}}
+  <div id="flashcard">
+    <div id="word-{{@index}}">{{this}}</div>
+    <div id="definition-{{@index}}" style="display: none;">{{lookup definitions @index}}</div>
+  </div>
+{{/each}}
 
 
+<script src="../../public/js/flashcards.js"></script>

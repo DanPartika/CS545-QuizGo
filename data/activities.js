@@ -6,6 +6,7 @@ const helpers = require("../helpers");
 
 //todo flashcards
 const randomizeOrder = async (listID) => {
+  
   listID = helpers.checkID(listID);
   const list = await listsFunc.getWordListById(listID);
   let list_of_words = list.words;
@@ -25,3 +26,8 @@ const randomizeOrder = async (listID) => {
 
 
 //todo matching
+
+
+module.exports= {
+  randomizeOrder
+}

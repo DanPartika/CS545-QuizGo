@@ -119,3 +119,30 @@ nav button:hover {
   font-size: 24px;
   cursor: pointer;
 }
+
+.start-button {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 200px;
+  height: 200px;
+  font-size: 3rem;
+  font-weight: bold;
+  color: white;
+  background-color: #007bff;
+  border-radius: 50%;
+  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.3);
+  cursor: pointer;
+  transition: transform 0.2s ease-in-out;
+}
+
+.start-button:hover {
+  transform: scale(1.1);
+}
+
+#flashcard div[id^="word-"] {
+  display: none;
+}
+#definition-0 {
+  display: none;
+}
