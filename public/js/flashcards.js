@@ -1,5 +1,5 @@
-console.log("3")
-let start = document.getElementById('startForm') 
+const { getWordListById } = require('../../data/list.js');
+let start = document.getElementById('startForm') ;
 
 // let input = document.getElementById('numberList')
 // let results = document.getElementById('results')
@@ -7,12 +7,19 @@ let start = document.getElementById('startForm')
 let currentIndex = 0;
 if(start) {
   console.log("4")
-  start.addEventListener('submit', e => {
+  start.addEventListener('submit', e =>   {
     e.preventDefault();
     console.log("here1")
-    document.addEventListener('click', function(event) {
+    document.addEventListener('click', async function(event) {
       console.log("here2")
       const targetId = event.target.id;
+      let url = window.location.href;
+      var match = url.match(/\/([^\/?]+)(?:\?|$)/);
+      var id = match[1];
+      console.log(id);
+      let list = await getWordListById(id);
+      let list_of_words = list.words;
+      console.log(list_of_words);
       if (targetId.startsWith('word-')) {
         // Show the definition for the clicked word
         const index = parseInt(targetId.substring(5));
@@ -35,7 +42,7 @@ if(start) {
   });
   
 }
-document.getElementById(`word-${currentIndex}`).style.display = 'block';
+//document.getElementById(`word-${currentIndex}`).style.display = 'block';
 
 // // Define the words and definitions
 // const word = {{json words}};

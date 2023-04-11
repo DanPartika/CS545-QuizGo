@@ -31,10 +31,10 @@ router.route("/quiz/:listID")
       // let list = await listsFunc.getWordListById(req.params.listID);
       // let words = list.words;
       // let definitions = list.definitions;
-      console.log("1")
-      let randomizedList = await activitiesFunc.randomizeOrder(req.params.listID);
-      console.log("2")
-      return res.render('activity/flashcards',{ words:randomizedList[0], definitions:randomizedList[1] })
+
+      //let randomizedList = await activitiesFunc.randomizeOrder(req.params.listID);
+      console.log("Dani");
+      return res.render('activity/flashcards');
     } catch (error) {
       // return res.redirect(`/lists/list/${req.params.listID}`);
       return res.render('error', {title:error,user:req.session.user});
