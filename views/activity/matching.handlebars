@@ -4,8 +4,16 @@
   <table>
     {{#each words}}
     <tr>
-      <td><input type="checkbox" name="word" value="{{this}}">{{this}}</td>
-      <td><input type="checkbox" name="definition" value="{{this}}">{{lookup ../definitions @index}}</td>
+      <td> 
+        <label>
+          <input type="checkbox" name="word" value="{{this}}">  {{this}}
+        </label>
+      </td>
+      <td> 
+        <label>
+          <input type="checkbox" name="definition" value="{{this}}"> {{lookup ../definitions @index}} 
+        </label>
+      </td>
     </tr>
     {{/each}}
   </table>

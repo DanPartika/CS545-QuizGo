@@ -48,7 +48,7 @@ router.route("/quiz/:listID")
     }
   });
 
-
+  
   router.route("/matching/:listID")
   .get(async (req, res) => { 
     try {
@@ -58,8 +58,8 @@ router.route("/quiz/:listID")
       
       //only want a max of 5 words in matching
       if (wrds.length>5) {
-        wrds=wrds.slice(0,4);
-        defs=defs.slice(0,4);
+        wrds=wrds.slice(0,5);
+        defs=defs.slice(0,5);
       } else if(wrds.length < 3) {
         throw "There must be at least 3 words to play matching";
       }
@@ -68,13 +68,5 @@ router.route("/quiz/:listID")
       return res.render('error', {title:error,user:req.session.user});
     }
   })
-  .post(async (req, res) => { 
-    try {
-
-    } catch (error) {
-      return res.render('error',{title:error,user:req.session.user})
-    }
-  });
-
 
 module.exports = router;
