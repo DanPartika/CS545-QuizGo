@@ -23,8 +23,12 @@ router.route("/list/:listID") //view specific list
   .get(async (req, res) => {
     let lstID = req.params.listID;
     let lst = await listsFunc.getWordListById(lstID);
-    if (req.session.user.username == lst.user) return res.render('list/list', {list: lst, user:req.session.user, sameUser:true});
-    else return res.render('list/list', {list: lst, user:req.session.user});
+    try {
+      if (req.session.user.username == lst.user) return res.render('list/list', {list: lst, user:req.session.user, sameUser:true});
+      else return res.render('list/list', {list: lst, user:req.session.user});  
+    } catch (error) {
+      return res.render('list/list', {list: lst, user:req.session.user});
+    }
   });
   
 router.route("/createList")
