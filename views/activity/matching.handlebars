@@ -5,14 +5,14 @@
     {{#each words}}
     <tr>
       <td> 
-        <label>
+        {{!-- <label> --}}
           <input type="checkbox" name="word" value="{{this}}">  {{this}}
-        </label>
+        {{!-- </label> --}}
       </td>
       <td> 
-        <label>
+        {{!-- <label> --}}
           <input type="checkbox" name="definition" value="{{this}}"> {{lookup ../definitions @index}} 
-        </label>
+        {{!-- </label> --}}
       </td>
     </tr>
     {{/each}}
