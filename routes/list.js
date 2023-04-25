@@ -23,9 +23,9 @@ router.route("/list/:listID") //view specific list
   .get(async (req, res) => {
     let lstID = req.params.listID;
     let lst = await listsFunc.getWordListById(lstID);
-    return res.render('list/list', {list: lst, user:req.session.user});
+    if (req.session.user.username == lst.user) return res.render('list/list', {list: lst, user:req.session.user, sameUser:true});
+    else return res.render('list/list', {list: lst, user:req.session.user});
   });
-
   
 router.route("/createList")
   .get(async (req, res) => { //get the page where you can add list

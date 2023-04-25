@@ -26,6 +26,12 @@
     {{/each}}
   </tbody>
 </table>
+{{#if sameUser}}
+  <a href="/lists/list/{{this._id}}">{{this.name}}</a>
+  <form id="addList-form" action="/lists/addList/{{this._id}}" method="GET">
+    <button type="submit" class="user-button"> Add words </button>
+  </form>
+{{/if}}
 {{!-- Add buttons to play games --}}
 <form id="playQuiz-form" action="/activity/quiz/{{list._id}}" method="GET">
   <button type="submit"> Quiz </button>

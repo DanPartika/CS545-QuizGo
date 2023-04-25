@@ -5,6 +5,7 @@ const configRoutes = require('./routes');
 const exphbs = require('express-handlebars');
 const session = require('express-session');
 const path = require('path');
+const Handlebars = require('handlebars');
 
 app.use(express.json())
 app.use(express.urlencoded({ extended: true }))
@@ -13,6 +14,9 @@ app.use(express.static('views')); //? idk about this
 app.use(express.static('public'));
 app.use('/public', express.static(__dirname +'/public'));
 
+Handlebars.registerHelper('ifEquals', function(arg1, arg2, options) {
+  return (arg1 == arg2) ? options.fn(this) : options.inverse(this);
+});
 
 app.use(session({
   name: 'AuthCookie',
