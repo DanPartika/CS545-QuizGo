@@ -2,11 +2,8 @@
 const listsFunc = require('../data/list');
 const helpers = require("../helpers");
 
-//todo Quizzes
 
-//todo flashcards
 const randomizeOrder = async (listID) => {
-  
   listID = helpers.checkID(listID);
   const list = await listsFunc.getWordListById(listID);
   let list_of_words = list.words;
@@ -23,6 +20,11 @@ const randomizeOrder = async (listID) => {
 
   return [list_of_words, list_of_definitions];
 }
+
+//todo Quizzes
+
+
+//todo flashcards
 
 
 //todo matching

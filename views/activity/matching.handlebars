@@ -1,0 +1,59 @@
+<h1>Matching Game</h1>
+
+<form id="matching-form">
+  <table>
+    {{#each words}}
+    <tr>
+      <td><input type="checkbox" name="word" value="{{this}}">{{this}}</td>
+      <td><input type="checkbox" name="definition" value="{{this}}">{{lookup ../definitions @index}}</td>
+    </tr>
+    {{/each}}
+  </table>
+
+  <div id="result"></div>
+
+  <button type="submit">Submit</button>
+</form>
+
+<script>
+  const matchingForm = document.getElementById('matching-form');
+  const resultDiv = document.getElementById('result');
+  const wordCheckboxes = matchingForm.querySelectorAll('input[name="word"]');
+  const definitionCheckboxes = matchingForm.querySelectorAll('input[name="definition"]');
+
+  matchingForm.addEventListener('submit', (event) => {
+    event.preventDefault();
+
+    const selectedWord = matchingForm.querySelector('input[name="word"]:checked');
+    const selectedDefinition = matchingForm.querySelector('input[name="definition"]:checked');
+
+    if (selectedWord && selectedDefinition) {
+      if (selectedWord.value === selectedDefinition.value) {
+        resultDiv.textContent = 'Match!';
+        removeMatchedPair(selectedWord.value, selectedDefinition.value);
+      } else {
+        resultDiv.textContent = 'Try again!';
+      }
+      selectedWord.checked = false;
+      selectedDefinition.checked = false;
+    }
+  });
+
+  function removeMatchedPair(word, definition) {
+    // Find the row that contains the matched word and definition
+    const matchingRow = Array.from(wordCheckboxes)
+      .find((wordCheckbox) => wordCheckbox.value === word)
+      .parentNode.parentNode;
+
+    // Remove the matching row from the table
+    matchingRow.parentNode.removeChild(matchingRow);
+
+    // Remove the matched word and definition from their respective checkbox lists
+    Array.from(wordCheckboxes)
+      .find((wordCheckbox) => wordCheckbox.value === word)
+      .parentNode.removeChild(wordCheckbox);
+    Array.from(definitionCheckboxes)
+      .find((definitionCheckbox) => definitionCheckbox.value === definition)
+      .parentNode.removeChild(definitionCheckbox);
+  }
+</script>
