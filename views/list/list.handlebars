@@ -32,12 +32,12 @@
   </form>
 {{/if}}
 {{!-- Add buttons to play games --}}
+<form id="playMatching-form" action="/activity/matching/{{list._id}}" method="GET">
+  <button type="submit" > Matching </button>
+</form>
 <form id="playQuiz-form" action="/activity/quiz/{{list._id}}" method="GET">
-  <button type="submit"> Quiz </button>
+  <button type="submit"> Multiple Choice </button>
 </form>
 <form id="playFlashCards-form" action="/activity/flash-cards/{{list._id}}" method="GET">
   <button type="submit"> Flash Cards </button>
-</form>
-<form id="playMatching-form" action="/activity/matching/{{list._id}}" method="GET">
-  <button type="submit" > Matching </button>
 </form>
