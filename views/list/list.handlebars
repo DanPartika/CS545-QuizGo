@@ -27,8 +27,7 @@
   </tbody>
 </table>
 {{#if sameUser}}
-  <a href="/lists/list/{{this._id}}">{{this.name}}</a>
-  <form id="addList-form" action="/lists/addList/{{this._id}}" method="GET">
+  <form id="addList-form" action="/lists/addList/{{list._id}}" method="GET">
     <button type="submit" class="user-button"> Add words </button>
   </form>
 {{/if}}
