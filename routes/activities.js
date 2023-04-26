@@ -57,9 +57,9 @@ router.route("/quiz/:listID")
       let defs = randomizedList[1];
       
       //only want a max of 5 words in matching
-      if (wrds.length>5) {
-        wrds=wrds.slice(0,5);
-        defs=defs.slice(0,5);
+      if (wrds.length>15) {
+        wrds=wrds.slice(0,15);
+        defs=defs.slice(0,15);
       } else if(wrds.length < 3) {
         throw "There must be at least 3 words to play matching";
       }
