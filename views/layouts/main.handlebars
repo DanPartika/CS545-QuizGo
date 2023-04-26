@@ -16,13 +16,19 @@
     </div>
     {{!insert some logo or banner here}}
     <nav class="menu-bar">
+    
+      <form id="list-form" action="/lists" method="GET"> 
+        <button type="submit"> Word Lists </button>
+      </form>
+
+       <form id="addNewList-form" action="/lists/createList" method="GET"> 
+        <button type="submit"> Create </button>
+      </form>
+
       <form id="homepage-view" action="/" method="GET"> 
         <button type="submit"> Homepage </button>
       </form>
 
-      <form id="list-form" action="/lists" method="GET"> 
-        <button type="submit"> Word Lists </button>
-      </form>
 
       <form id="account-form" action="/users/protected" method="GET"> 
         <button type="submit"> Account </button>
