@@ -17,6 +17,11 @@
 
 }
 
+.test1{
+  color: #c91e1e;
+  font-weight: bold;
+}
+
 .button:hover {
   background-color: #f2f2f2;
   color: #c91e1e;
@@ -158,4 +163,3 @@ nav button:hover {
 #definition-0 {
   display: none;
 }
-
